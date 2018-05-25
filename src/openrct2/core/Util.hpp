@@ -23,6 +23,12 @@ namespace Util
         return N;
     }
 
+template<typename... Args, typename R, typename T>
+static auto Overload(R(T::*memberFunction)(Args...))
+{
+    return memberFunction;
+}
+
 } // namespace Util
 
 #endif // _UTIL_HPP_
