@@ -37,7 +37,7 @@ namespace Math
 
     // Taken from http://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
     template<class T>
-    typename std::enable_if<!std::numeric_limits<T>::is_integer, bool>::type AlmostEqual(T x, T y, sint32 ulp = 20)
+    typename std::enable_if<!std::numeric_limits<T>::is_integer, bool>::type AlmostEqual(T x, T y, int32_t ulp = 20)
     {
         // the machine epsilon has to be scaled to the magnitude of the values used
         // and multiplied by the desired precision in ULPs (units in the last place)

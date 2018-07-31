@@ -9,7 +9,9 @@
 
 #pragma once
 
+#include <deque>
 #include <openrct2/interface/InteractiveConsole.h>
+#include <string>
 
 namespace OpenRCT2::Ui
 {
