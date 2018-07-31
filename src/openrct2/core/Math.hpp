@@ -12,8 +12,8 @@
 #include "../common.h"
 
 #include <algorithm>
-#include <limits>
 #include <cmath>
+#include <limits>
 #include <type_traits>
 
 /**
@@ -43,6 +43,7 @@ namespace Math
         // and multiplied by the desired precision in ULPs (units in the last place)
         return std::abs(x - y) <= std::numeric_limits<T>::epsilon() * std::abs(x + y) * ulp
             // unless the result is subnormal
-            || std::abs(x - y) < (std::numeric_limits<T>::min)(); // TODO: Remove parentheses around min once the macro is removed
+            || std::abs(x - y)
+            < (std::numeric_limits<T>::min)(); // TODO: Remove parentheses around min once the macro is removed
     }
 } // namespace Math

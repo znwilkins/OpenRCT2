@@ -362,7 +362,7 @@ static void widget_text_centred(rct_drawpixelinfo* dpi, rct_window* w, rct_widge
         t = w->y + widget->top;
 
     auto stringId = widget->text;
-    void * formatArgs = gCommonFormatArgs;
+    void* formatArgs = gCommonFormatArgs;
     if (widget->flags & WIDGET_FLAGS::TEXT_IS_STRING)
     {
         stringId = STR_STRING;
@@ -406,7 +406,7 @@ static void widget_text(rct_drawpixelinfo* dpi, rct_window* w, rct_widgetindex w
         t = w->y + widget->top;
 
     auto stringId = widget->text;
-    void * formatArgs = gCommonFormatArgs;
+    void* formatArgs = gCommonFormatArgs;
     if (widget->flags & WIDGET_FLAGS::TEXT_IS_STRING)
     {
         stringId = STR_STRING;
