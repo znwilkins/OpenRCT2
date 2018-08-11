@@ -17,7 +17,7 @@ struct rct_tile_element_surface_properties
     uint8_t slope;        // 4 0xE0 Edge Style, 0x1F Slope
     uint8_t terrain;      // 5 0xE0 Terrain Style, 0x1F Water height
     uint8_t grass_length; // 6
-    uint8_t ownership;    // 7
+    uint8_t ownership;    // 7 0xF0 Ownership, 0x0F Park fences
 };
 assert_struct_size(rct_tile_element_surface_properties, 4);
 
