@@ -2101,7 +2101,7 @@ uint8_t footpath_element_get_path_scenery(const rct_tile_element* tileElement)
 void footpath_element_set_path_scenery(rct_tile_element* tileElement, uint8_t pathSceneryType)
 {
     tileElement->properties.path.additions &= ~FOOTPATH_PROPERTIES_ADDITIONS_TYPE_MASK;
-    tileElement->properties.path.additions |= pathSceneryType;
+    tileElement->properties.path.additions |= pathSceneryType & FOOTPATH_PROPERTIES_ADDITIONS_TYPE_MASK;
 }
 
 uint8_t footpath_element_get_path_scenery_index(const rct_tile_element* tileElement)
