@@ -180,6 +180,9 @@ rct_footpath_entry* get_footpath_entry(int32_t entryIndex);
 void footpath_queue_chain_reset();
 void footpath_queue_chain_push(uint8_t rideIndex);
 
-uint8_t footpath_get_edges(const rct_tile_element* element);
+uint8_t footpath_element_get_edges(const rct_tile_element* element);
+void footpath_element_set_edges(rct_tile_element* element, uint8_t edges);
+uint8_t footpath_element_get_corners(const rct_tile_element* element);
+void footpath_element_set_corners(rct_tile_element* element, uint8_t corners);
 
 #endif

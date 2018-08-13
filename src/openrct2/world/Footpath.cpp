@@ -2706,7 +2706,24 @@ rct_footpath_entry* get_footpath_entry(int32_t entryIndex)
     return result;
 }
 
-uint8_t footpath_get_edges(const rct_tile_element* element)
+uint8_t footpath_element_get_edges(const rct_tile_element* element)
 {
-    return element->properties.path.edges & 0xF;
+    return element->properties.path.edges & FOOTPATH_PROPERTIES_EDGES_EDGES_MASK;
+}
+
+void footpath_element_set_edges(rct_tile_element* element, uint8_t edges)
+{
+    element->properties.path.edges &= ~FOOTPATH_PROPERTIES_EDGES_EDGES_MASK;
+    element->properties.path.edges |= edges & FOOTPATH_PROPERTIES_EDGES_EDGES_MASK;
+}
+
+uint8_t footpath_element_get_corners(const rct_tile_element* element)
+{
+    return element->properties.path.edges >> 4;
+}
+
+void footpath_element_set_corners(rct_tile_element* element, uint8_t corners)
+{
+    element->properties.path.edges &= ~FOOTPATH_PROPERTIES_EDGES_CORNERS_MASK;
+    element->properties.path.edges |= corners << 4;
 }
