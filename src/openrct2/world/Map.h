@@ -119,7 +119,7 @@ extern uint8_t gMapSelectArrowDirection;
 
 extern uint8_t gMapGroundFlags;
 
-extern TileElement gTileElements[MAX_TILE_TILE_ELEMENT_POINTERS * 3];
+extern TileElement gTileElements[MAX_TILE_ELEMENTS];
 extern TileElement* gTileElementTilePointers[MAX_TILE_TILE_ELEMENT_POINTERS];
 
 extern std::vector<CoordsXY> gMapSelectionTiles;
