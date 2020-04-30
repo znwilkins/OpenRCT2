@@ -242,6 +242,16 @@ NetworkUser* NetworkUserManager::GetOrAddUser(const std::string& hash)
     return networkUser;
 }
 
+std::vector<std::string> NetworkUserManager::GetAllUserHashes()
+{
+    std::vector<std::string> hashes(_usersByHash.size());
+    for (auto kvp : _usersByHash)
+    {
+        hashes.push_back(kvp.first);
+    }
+    return hashes;
+}
+
 void NetworkUserManager::GetStorePath(utf8* buffer, size_t bufferSize)
 {
     platform_get_user_directory(buffer, nullptr, bufferSize);

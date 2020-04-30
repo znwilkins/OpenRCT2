@@ -15,6 +15,7 @@
 #include <jansson.h>
 #include <map>
 #include <string>
+#include <vector>
 
 class NetworkUser final
 {
@@ -52,6 +53,7 @@ public:
     const NetworkUser* GetUserByHash(const std::string& hash) const;
     const NetworkUser* GetUserByName(const std::string& name) const;
     NetworkUser* GetOrAddUser(const std::string& hash);
+    std::vector<std::string> GetAllUserHashes();
 
 private:
     std::map<std::string, NetworkUser*> _usersByHash;

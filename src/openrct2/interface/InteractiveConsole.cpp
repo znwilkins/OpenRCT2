@@ -35,6 +35,7 @@
 #include "../management/NewsItem.h"
 #include "../management/Research.h"
 #include "../network/network.h"
+#include "../network/NetworkUser.h"
 #include "../object/Object.h"
 #include "../object/ObjectList.h"
 #include "../object/ObjectManager.h"
@@ -1689,6 +1690,91 @@ static int32_t cc_add_news_item([[maybe_unused]] InteractiveConsole& console, [[
     return 0;
 }
 
+static int32_t cc_users(InteractiveConsole& console, const arguments_t& argv)
+{
+    if (network_get_mode() != NETWORK_MODE_SERVER)
+    {
+        console.WriteFormatLine("This command is only supported in server-side multiplayer.");
+        return 0;
+    }
+    if (!argv.empty())
+    {
+        NetworkUserManager userManager;
+        if (argv[0] == "list")
+        {
+            userManager.Load();
+            std::vector<std::string> userHashes = userManager.GetAllUserHashes();
+            for (size_t i = 0; i < userHashes.size(); i++)
+            {
+                const NetworkUser* networkUser = userManager.GetUserByHash(userHashes[i]);
+                if (networkUser != nullptr)
+                {
+                    console.WriteFormatLine("User %u", i);
+                    console.WriteFormatLine("  Hash: %s", networkUser->Hash.c_str());
+                    console.WriteFormatLine("  Name: %s", networkUser->Name.c_str());
+                    // FIXME: Need to handle null GroupId
+                    console.WriteFormatLine("  GID: %u", networkUser->GroupId.GetValue());
+                }
+            }
+        }
+        else if (argv[0] == "set")
+        {
+            if (argv.size() < 3)
+            {
+                console.WriteFormatLine("users set <username> <group id>");
+            }
+            else
+            {
+                std::string username = argv[1];
+                // FIXME: Handle errors in passed GroupId (atoi returns 0 if error)
+                uint8_t gid = atoi(argv[2].c_str());
+                userManager.Load();
+                const NetworkUser* networkUser = userManager.GetUserByName(username);
+                if (networkUser != nullptr)
+                {
+                    uint8_t oldGid = networkUser->GroupId.GetValue();
+//                    networkUser->GroupId = gid;
+                    console.WriteFormatLine("Changed %s from %u to %u", networkUser->Name.c_str(), oldGid, gid);
+                }
+                else
+                {
+                    console.WriteFormatLine("No user %s found", username.c_str());
+                }
+            }
+        }
+        else if (argv[0] == "get")
+        {
+            if (argv.size() < 2)
+            {
+                console.WriteLine("users get <username>");
+            }
+            else
+            {
+                std::string username = argv[1];
+                userManager.Load();
+                const NetworkUser* networkUser = userManager.GetUserByName(username);
+                if (networkUser != nullptr)
+                {
+                    console.WriteLine("Found user");
+                    console.WriteFormatLine("  Hash: %s", networkUser->Hash.c_str());
+                    console.WriteFormatLine("  Name: %s", networkUser->Name.c_str());
+                    // FIXME: Need to handle null GroupId
+                    console.WriteFormatLine("  GID: %u", networkUser->GroupId.GetValue());
+                }
+                else
+                {
+                    console.WriteFormatLine("No user %s found", username.c_str());
+                }
+            }
+        }
+    }
+    else
+    {
+        console.WriteLine("subcommands: list, set, get");
+    }
+    return 0;
+}
+
 using console_command_func = int32_t (*)(InteractiveConsole& console, const arguments_t& argv);
 struct console_command
 {
@@ -1786,6 +1872,7 @@ static constexpr const console_command console_command_table[] = {
     { "replay_stop", cc_replay_stop, "Stops the replay", "replay_stop"},
     { "replay_normalise", cc_replay_normalise, "Normalises the replay to remove all gaps", "replay_normalise <input file> <output file>"},
     { "mp_desync", cc_mp_desync, "Forces a multiplayer desync", "cc_mp_desync [desync_type, 0 = Random t-shirt color on random peep, 1 = Remove random peep ]"},
+    { "users", cc_users, "Control multiplayer user permissions", "users <list|edit> [args]"},
 
 };
 // clang-format on
